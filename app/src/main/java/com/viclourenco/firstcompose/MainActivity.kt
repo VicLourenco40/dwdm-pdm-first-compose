@@ -5,14 +5,18 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Surface
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.viclourenco.firstcompose.ui.theme.FirstComposeTheme
 
@@ -21,8 +25,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FirstComposeTheme {
-                Surface(modifier = Modifier.fillMaxSize()) {
-                    Greeting(
+                Scaffold(modifier = Modifier.fillMaxSize()) {
+                    innerPadding -> Greeting(
+                        modifier = Modifier.padding(innerPadding),
                         message = "Happy Birthday!",
                         from = "Vicente",
                     )
@@ -34,22 +39,27 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(message: String, from: String, modifier: Modifier = Modifier) {
-    Image(painter = painterResource(R.drawable.androidparty),
-        contentDescription = null
-    )
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = message,
-            fontSize = 90.sp,
-            lineHeight = 110.sp
+    Box(modifier = modifier) {
+        Image(
+            painter = painterResource(R.drawable.androidparty),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            alpha = 0.5f
         )
-        Text(
-            text = "From " + from + ".",
-            fontSize = 36.sp
-        )
+        Column(
+            modifier = Modifier.fillMaxSize().padding(4.dp),
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = message,
+                fontSize = 90.sp,
+                lineHeight = 110.sp
+            )
+            Text(
+                text = "From " + from + ".",
+                fontSize = 36.sp
+            )
+        }
     }
 }
 
